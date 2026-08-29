@@ -84,7 +84,16 @@ def run_interactive_menu():
         base, ext = os.path.splitext(path_input)
         default_out = f"{base}_rekap.xlsx"
         out_input = input(f"Nama file output [default: {os.path.basename(default_out)}]: ").strip().strip('"').strip("'")
-        output_path = out_input if out_input else default_out
+        if out_input:
+            if not out_input.lower().endswith('.xlsx'):
+                out_input = f"{os.path.splitext(out_input)[0]}.xlsx"
+            if not os.path.isabs(out_input) and not os.path.dirname(out_input):
+                input_dir = os.path.dirname(os.path.abspath(path_input))
+                output_path = os.path.join(input_dir, out_input)
+            else:
+                output_path = out_input
+        else:
+            output_path = default_out
 
         tot_input = input("Tambahkan baris Total di akhir? (y/n) [default: y]: ").strip().lower()
         add_totals = (tot_input != "n")
@@ -92,7 +101,9 @@ def run_interactive_menu():
         process_file(path_input, output_path, order="debet-first", add_totals=add_totals)
 
     elif pilihan == "2":
-        sample_name = input("Nama file sample [default: sample_transaksi.xlsx]: ").strip() or "sample_transaksi.xlsx"
+        sample_name = input("Nama file sample [default: sample_transaksi.xlsx]: ").strip().strip('"').strip("'") or "sample_transaksi.xlsx"
+        if not sample_name.lower().endswith('.xlsx'):
+            sample_name = f"{os.path.splitext(sample_name)[0]}.xlsx"
         count_str = input("Jumlah transaksi [default: 5]: ").strip() or "5"
         try:
             count = int(count_str)
