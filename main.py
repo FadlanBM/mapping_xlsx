@@ -94,10 +94,7 @@ def run_interactive_menu():
         else:
             output_path = default_out
 
-        tot_input = input("Tambahkan baris Total di akhir? (y/n) [default: y]: ").strip().lower()
-        add_totals = (tot_input != "n")
-
-        process_file(path_input, output_path, order="debet-first", add_totals=add_totals)
+        process_file(path_input, output_path, order="debet-first", add_totals=False)
 
     elif pilihan == "2":
         print("Sampai jumpa!")
@@ -110,7 +107,7 @@ def main():
         base, ext = os.path.splitext(input_file)
         output_file = f"{base}_rekap.xlsx"
         print(f"[INFO] Mode Drag & Drop terdeteksi untuk: {input_file}")
-        process_file(input_file, output_file, order="debet-first", add_totals=True)
+        process_file(input_file, output_file, order="debet-first", add_totals=False)
         input("\nTekan ENTER untuk menutup jendela...")
         return
 
