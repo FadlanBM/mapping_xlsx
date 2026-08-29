@@ -6,6 +6,18 @@ def build():
     print("=" * 60)
     print("Memulai build standalone Windows EXE: RekapTransaksi...")
     print("=" * 60)
+
+    # Tutup instance RekapTransaksi.exe yang mungkin masih berjalan
+    if sys.platform == "win32":
+        subprocess.run(["taskkill", "/F", "/IM", "RekapTransaksi.exe", "/T"], 
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    dist_exe = os.path.join("dist", "RekapTransaksi.exe")
+    if os.path.exists(dist_exe):
+        try:
+            os.remove(dist_exe)
+        except OSError:
+            pass
     
     cmd = [
         sys.executable,

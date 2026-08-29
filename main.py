@@ -58,11 +58,10 @@ def run_interactive_menu():
     print("     APLIKASI REKAP & MAPPING TRANSAKSI EXCEL")
     print("=" * 60)
     print("1. Pilih & Rekap File Excel / CSV")
-    print("2. Buat File Contoh (Sample Excel)")
-    print("3. Keluar")
+    print("2. Keluar")
     print("=" * 60)
     
-    pilihan = input("Pilih menu (1/2/3) [default: 1]: ").strip() or "1"
+    pilihan = input("Pilih menu (1/2) [default: 1]: ").strip() or "1"
     
     if pilihan == "1":
         print("\nSilakan tentukan file input:")
@@ -101,18 +100,6 @@ def run_interactive_menu():
         process_file(path_input, output_path, order="debet-first", add_totals=add_totals)
 
     elif pilihan == "2":
-        sample_name = input("Nama file sample [default: sample_transaksi.xlsx]: ").strip().strip('"').strip("'") or "sample_transaksi.xlsx"
-        if not sample_name.lower().endswith('.xlsx'):
-            sample_name = f"{os.path.splitext(sample_name)[0]}.xlsx"
-        count_str = input("Jumlah transaksi [default: 5]: ").strip() or "5"
-        try:
-            count = int(count_str)
-        except ValueError:
-            count = 5
-        out_path = generate_sample_excel(sample_name, count=count)
-        print(f"[SUKSES] File sample berhasil dibuat di: {out_path}")
-
-    elif pilihan == "3":
         print("Sampai jumpa!")
         return
 
